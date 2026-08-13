@@ -1,0 +1,47 @@
+services:
+  db:
+    image: postgres:16
+    container_name: canteen-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-canteen}
+      POSTGRES_USER: ${POSTGRES_USER:-canteen_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-canteen_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-canteen_user} -d ${POSTGRES_DB:-canteen}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: canteen-backend
+    restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB:-canteen}
+      POSTGRES_USER: ${POSTGRES_USER:-canteen_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-canteen_password}
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    image: nginx:alpine
+    container_name: canteen-frontend
+    restart: unless-stopped
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
