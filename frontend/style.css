@@ -1,0 +1,92 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
+
+header {
+  background: #1f2937;
+  color: white;
+  padding: 28px 7%;
+}
+
+header h1 {
+  margin: 0 0 6px;
+}
+
+main {
+  width: 86%;
+  max-width: 1200px;
+  margin: 28px auto;
+}
+
+section {
+  margin-bottom: 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.card,
+.panel,
+.order {
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.07);
+}
+
+.card button {
+  display: block;
+  width: 100%;
+}
+
+button {
+  border: 0;
+  border-radius: 7px;
+  padding: 9px 13px;
+  margin-top: 12px;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+.cart-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-row button {
+  margin: 0;
+  padding: 5px 10px;
+}
+
+.order {
+  margin-bottom: 12px;
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 10px;
+  padding: 5px 8px;
+  border-radius: 20px;
+  background: #e5e7eb;
+  font-size: 12px;
+}
+
+select {
+  padding: 7px;
+  margin-left: 8px;
+}
